@@ -1,0 +1,615 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Eye Detection Using OpenCV</title>
+</head>
+
+<body>
+<h1>Eye Detection Using OpenCV</h1>
+
+<h3>Bobby Flitsch, Aaron Graham-Horowitz, TJ Barber, Hikari Senju</h3>
+
+<h3><a href="https://vimeo.com/41263448">Video Demo of our Project</a></h3>
+
+<h2>Overview</h2>
+
+<p>We implemented eye detection on face images using functions from the OpenCV 
+   (Open Source Computer Vision Library) Library, and compared it to an
+   implementation of eyedetection that uses haar cascades for detection (a
+   well expert-researched algorithm for swift and comprehensive facial feature
+   detection on images).
+<p>In a nutshell, our implementation works by filtering
+   an image for dark pixels within a specific RGB value range, (0-10 on all 3
+   channels) looping through the filtered image for these pixels, isolating
+   the objects on the original image that these desired pixels make up, (using
+   the cv::floodFill function) and printing circles over these objects. We
+   then compare the result image from our algorithm with that from the haar
+   feature detected image with a program that loops through both images and
+   copares them pixel by pixel for any differences. Both images are then
+   displayed for visual comparison, and the percentage difference in pixels
+   between the images is printed to the terminal.
+<p>In order to run this program, we have edited the OpenCV demonstration of
+   face detection using haar cascades to detect eyes (as well as use the I/O
+   functionality present in our other algorithms) and have created an
+   algorithm for eyed etection (as briefly described above) and a program to
+   run direct pixel comparison on two images (also described above).
+<p>Although it is not technically part of our final project, we have also
+   included the developmental code that was used to figure out how certain
+   OpenCV functions used for the project work (these will be elaborated on in
+   the technical spec).
+
+<h2>Planning</h2>
+
+<p>Initially, we hoped (by including multiple features in the cool extensions
+   section of our spec) to implement feature detection on multiple parts of 
+   the face. As our work progressed on this project, however, our understanding
+   of what was possible within the timeline and scope of our project changed 
+   since the submission of our initial technical specification.
+
+<p>Here is the
+   <a href="report/original-technical-spec.html">original technical spec</a>.
+   
+<p>As a result, of this new understanding, rather than implement shoddy
+   implementations of general feature detection on multiple facial features,
+   we decided to focus on eyes and eye detection alone. Because our project
+   planning changed since the first checkpoint, the following sums up our 
+   planning since the first checkpoint (as well as the milestones we intended
+   to reach at each stage).
+   
+<h3>4/15 - 4/22</h3>
+
+<p>After the first checkpoint, we better understood how to implement our goals
+   in the context of our original planning, as well as how difficult
+   implementing eye detection with individual pixel analysis would be. As such,
+   our plan was to get eye detection "working" during this week, and then 
+   work on refining the detection of eyes after this point.
+
+<h3>4/23 - 4/24</h3>
+
+<p>After implementing our beta version of eye detection, we hoped to work on
+   implementing our image comparison algorithm.
+   
+<h3>4/25 - 4/26</h3>
+
+<p>After hopefully getting our image comparison working in this time frame, we
+   hoped to refine our methods of eye detection, and work on a better method
+   for reducing the number of false positives, (of which MANY were present in
+   the beta version) solving the segmentation fault problems present in the
+   beta version, as well as implementing a better method for drawing the
+   detected circles on the image.
+   
+<h3>4/27 - 4/29</h3>
+
+<p>Hopefully, by this point all the code involved in our project would be done.
+   At this point, we could focus on creating our video and reformatting the
+   technical and functional specs for submission.
+
+<p>With these planning changes in mind, here is our
+   <a href="report/annotated-technical-spec.html">annotated technical spec</a>. 
+   
+   
+<p>Overall, our project worked out very well. We were able to get detection of
+   eyes working very well in certain circumstances. As eye detection is still 
+   an unsolved problem (in the sense that there is not a "perfect" eye
+   detection algorithm in existance) the fact that we were able to get our
+   algorithm to work (and work better than haar feature detection in certain
+   instances) is a very promising outcome.
+
+<p>As for our milestones, we were unfortunately not able to meet the deadlines
+   of our original timeline from our 1st checkpoint. If we were able to meet
+   these deadlines, we would have finished detection of multiple features
+   besides the eyes (namely nose and mouth). We were, however, after revising
+   our timeline and plans, able to meet all of our new deadlines exactly on
+   time, and meet all of the baseline milestones included in our original
+   technical specification. These were understanding and manipulating the haar
+   detection algorithm to work to our needs, implementing our own eye detection
+   algorithm, and implementing an image comparison algorithm. As such, for eye
+   detection, we were extremely successful in reaching the baseline milestones
+   included in our 1st checkpoint specification.
+
+<h2>Design</h2>
+
+<p>Our main design had 3 goals in mind.
+<br>
+   1) Understand and manipulate the haar feature detection algorithm to suit
+   our needs in comparing the results of this method of eye detection with our
+   implementation.
+<br>
+   2) Implement our own eye detection algorithm to work the same images that
+   the haar feature detection were ran on, to locate the eyes in the image,
+   and to produce an image with those features circled.
+<br>  
+   3) Implement a comparison algorithm that takes two images as input and
+   compares them pixel by pixel, informing the user of the percentage
+   difference in pixels between the two images.
+
+<p>As such, our first part of the project was to read and analyze the haar
+   detection algorithm. Because this algorithm used functions defined within
+   the OpenCV library, we each had to install the library on each of our
+   computers. This actually proved to be quite difficult, because we were
+   each running our code in different environments (some of us on mac, one
+   of us on the appliance... etc.) and we were not experienced in installing
+   code libraries on our computers. Even when our project TF, Tony Ho, met to
+   help us with this, it was still a difficult process. We eventually, however
+   successfully installed the libraries on each of our computers, and were able
+   to get started on the haar detection code.
+<br>
+   The next part of this process involved much code reading and understanding.
+   In order to start on our understanding of the haar detection algorithm, we
+   began by reading many scholarly articles on face detection. The following
+   articles were sources in understanding the haar detection algorithm:
+<br>
+   <a href="report/eyedetection.pdf">FIRST SOURCE</a>
+<br>
+   <a href="report/Haar.pdf">SECOND SOURCE</a>
+<br>
+    <a href="report/facedetect.pdf">THIRD SOURCE</a>
+<br>
+   After this, once we had a better understanding of how haar cascades worked,
+   we began to read the haardetect.cpp file itself. Because none of us had ever
+   coded in c++, we had to also learn the syntax along with the OpenCV library
+   functions. At this stage, we read through the code and commented what each
+   line did (as the code initially had no commenting in it). Much of these
+   comments are still in the file. Afterwards, we had to modify the program to
+   detect eyes, rather than faces. In order to do this, we passed in the
+   eye classifiers as the "nested cascades" argument to the function and
+   commented out the line of code that printed the main cascade detected
+   circles. This way, it would detect the face, then detect the eyes within the
+   detected face. When it came time to draw the circles for each of the
+   detected objects, it would now NOT draw the circle for the face, and just
+   draw the circles for the eyes. Initially, the circles would just be drawn
+   as outlines, so we also figured out how to edit the "circle" function to
+   draw filled in circles (for the purpose of comparing images). We figured out
+   how to do that by changing the 4th argument (describing the width of the
+   circle) to be negative, rather than positive.
+<br>
+   Later on, once the comparison algorithm was implemented, in order to
+   facilitate the I/O functionality of the comparison function, the haardetect
+   algorithm was also edited to write the result image to file, in order to
+   be loaded by the comparison function, and the functionality for displaying
+   the result image in a window was taken out of the haardetect algorithm
+   (since compare was made to display both loaded images together). 
+
+<p>The next step (in our scheduled timeline) was to implement the comparison
+   algorithm. Unfortunately, multiple group members' schedules prohibited 
+   meeting to work cooperatively, and certain group members' conflicts also
+   prevented them from helping with work towards the beginning of the final
+   week. As such, Bobby took the reigns on the coding aspect of the project,
+   and was the writer (and commenter) of all the subsequent project code.
+   
+<p>The first part of the comparison function was figuring out how to load
+   images into an analyzable data format. Initially, this was done with
+   matrices, however, as I tested the code more and more, the way pointers
+   were passed in looping through the data streams caused segmenation faults
+   (the reason the beta implementation always seg faults upon exiting). As
+   such, I read up on different data structures, and how to loop through
+   image pixels with OpenCV functionality, and came accross an "obsolete" data
+   type called the IplImage (obsolete because all of the later OpenCV version
+   functions use cv::Mats (a matrix structure) rather than IplImages). This
+   proved to be easier to loop through, and once I was able to figure out the
+   pointer syntax involved with the type, looping through proved feasable.
+<br>
+   The way the compare function works is that it loads both images (from their
+   respective paths, passed in as command line arguments) into the IplImage
+   structures. The algorithm then loops through both structures, and at each
+   pixel, the 3 color channels are compared for equality. If they are not
+   equal, a counter is updated for that pixel. Once all pixels have been
+   compared, the resulting counter is divided over the total number of pixels
+   present in each picture, resulting in the percentage difference. This
+   resulting percentage is then printed to the terminal so that the user may
+   see this result. As well, in order to facilitate a nice visual comparison
+   of the images, they are both displayed simultaneously in windows that pop up
+   on the screen.
+   
+<p>The final part of the project was implementing our own implementation of eye
+   detection to compare to the haar detection. There were three main parts to
+   this algorithm.
+<br>
+   1) A method of processing the image and picking out the pixels that should
+   be searched for in locating the eyes.
+<br>
+   2) A method for looping through the pixels of the processed image and
+   searching for these "choice" pixels that would be found in a good candidate
+   for an eye.
+<br>
+   3) A method for doing something to each of these selected pixels to indicate
+   that an eye has been located, and to print to the image the detected eye.
+<br>
+   The first part of the functionality was solved with an OpenCV function
+   called "inRange". This function takes an image, iterates through its pixels
+   and searches for pixels that are within a certain color range along the
+   three channels. If a pixel is within range, it produces a white pixel on the
+   resulting image. If it is not withing the range, it produces a black pixel
+   on the resulting image. As such, I decided to use inRange on the image to
+   search for <b>very</b> black pixels (within the RGB range of (0, 0, 0) and
+   (10, 10, 10)). I decided upon this range in order to try and search for the
+   pupil(s) of the eye(s). This picked out the "desired" pixels by creating an
+   image where these "desired" pixels were made white, and the rest of the
+   image pixels were made black.
+<br>
+   The second part of the functionality was where the problem of using Mats
+   (the OpenCV data structure for matrices) versus IplImages came into play.
+   Initially, because all of the useful OpenCV functions (including inRange)
+   take in Mats as arguments, rather than IplImages, I decided to loop through
+   the Mat structures, and avoid the IplImage data type. In doing this,
+   however, (and it's still unclear why this implementation ran into problems)
+   the pixels were not registered correctly, and looped through the image 
+   multiple times, or only partially, among a <b>host</b> of other problems. I
+   think that these problems were the result of the syntax for passing around
+   pointers within the matrix data and pixel channels. In order to solve this,
+   I experimented with the IplImage data type, and figured out how to loop
+   through the pixels. Unfortunately, this meant that multiple image data types
+   had to be used in the code, (sometimes to represent the same images)
+   however, it works! As such, I made the design decision to use IplImages for
+   individual pixel analysis, and Mats for passing in as arguments to library
+   functions.
+<br>
+   This functionality may be seen in the "looping.cpp" file included in the 
+   "Developmental_Code/" directory within the project code. (I have previously
+   mentioned that this code is not technically part of the final project,
+   but it will be helpful in explaining the design process of this project.
+   I have also included these files within the "report/" directory.) To run
+   "looping", just type "./looping" into the command line. (The functionality
+   of this program is described in the comments at the top of the "looping.cpp"
+   file) After pressing any key once the "eye.bmp" image is displayed, the
+   black filter will run, and the resulting image will be displayed. This
+   demonstrates the first step of the algorithm, as described above. When a key
+   is pressed again, the prgram loads the black image as an IplImage and
+   iterates through each of the pixels, and draws a pixel sized circle over the
+   respective pixel location on a black background. The resulting image is then
+   displayed, and may be viewed side by side with the original black filtered
+   image, to see how the looping functionality was able to detect each of the
+   desired pixels.
+<br>
+   The third part of the algorithm was solved with the OpenCV function
+   "floodFill". What this function does is take a "seed" (a starting point, as
+   a coordinate, of the image) and fills in the surrounding pixels that are
+   "similar" to the seed (in color, intensity, etc) based off a certain
+   threshold range (passed in as arguments). The area of the flood-filled
+   object is stored as a rect (which is passed in as an argument) that
+   represents the smallest area of a rectangle that surrounds the flood-filled
+   object. The algorithm then takes the "eye" (the rect produced by floodFill)
+   and draws a circle over the respective location on a copy of the input
+   image (the image needs to be copied because floodFill overwrites pixels of
+   the image it processes. This way, the original image is only overwritten
+   by circles, and not floodfill).
+<br>
+   Just like with the "looping.cpp" program, a program (called "ffill.cpp") was
+   created in the "Developmental_Code/" directory to demonstrate my design
+   decisions at this point in the algorithm. Just like "looping", as well, once
+   the program is compiled with the "build_all.sh" script, it should be called
+   as just "./ffill", with no arguments. Once ran, the program loads the
+   "eye.bmp" image and displays it in a window. Once a key is pressed, the
+   input image is copied, and then floodFill is ran on the copied image, and
+   the resulting rect is recorded. This rect is then printed on the original 
+   image as a circle, and both images (the flood-filled image and the circled
+   input image) are displayed simultaneously, so they may be viewed side by 
+   side. You will notice that flood-fill is only ran once on a hard-coded seed
+   (Point (150, 170) - representing the center of the pupil). As such, this
+   represents just a single call to floodFill within the eyedetect algorithm.
+   Putting this functionality together with the looping functionality produces
+   our implementation of eye detection. Each time a desired pixel is found in
+   the loop, it is passed into a call to floodFill. As such, each of the "eyes"
+   are located and drawn, iteratively, within the eye detection algorithm.
+   It is this functionality that brings together all three parts of the
+   algorithm.
+
+<h2>Implementation</h2>
+
+<p>Upon experimenting with our eye detection algorithm (using each of the
+   images located within the "images/" directory) we noticed a host of results.
+   The results fall into the following NUMBER categories.
+<br>
+   1) Our algorithm successfully detects the eye(s), whereas the haar detection
+   algorithm does not.
+<br>
+   2) The haar detection works successfully. Our algorithm detects the eyes,
+   but also detects <b>many</b> false positives.
+<br>
+   3) Both algorithms detect the eyes, but both yeild false positives.
+<br>
+   4) Neither our algorithm, nor the haar detection algorithm detect any eyes.
+
+<p>Please note: before explaining how these 4 results come from our algorithm,
+   each of the possible function calls to run our project are defined below.
+   They are a call to each of the images located within the images folder. I
+   have listed them below so that they may be easily copied and pasted into the
+   terminal.
+<br>
+   ./run_project aaron
+<br>
+   ./run_project bobby
+<br>
+   ./run_project darkerFace
+<br>
+   ./run_project darkerFace2
+<br>
+   ./run_project eye
+<br>
+   ./run_project eye2
+<br>
+   ./run_project eyes
+<br>
+   ./run_project eyes2
+<br>
+   ./run_project hikari
+<br>
+   ./run_project lighterFace
+<br>
+   ./run_project tj
+   
+<p>The first result, that our algorithm works, whereas the haar detection
+   does not, may be demonstrated with:
+<br>
+   ./run_project eye
+<br>
+   ./run_project eye2
+<br>
+   ./run_project eyes
+<br>
+   ./run_project lighterFace
+<br>
+   The probable reason for this is that these examples demonstrate perfectly
+   the perfect circumstances for our algorithm, and the worst possible
+   circumstances for the haar detection. Because our algorithm looks at 
+   individual pixels, when there are not as many dark pixels to be confused
+   as pupils (i.e. the photo is zoomed in on just the face, without any
+   defining features in the background) the pupils may be easily located from
+   the rest of the face, isolated, and processed with our algorithm. As well,
+   eye.bmp and eye2.bmp are <b>just</b> the eyes, so obviously there is less
+   possibility for confusion. The important thing is, however, that it works!
+   It indeed locates the eyes in these instances.
+<br>
+   The reason that the haar cascades don't work is because of the nature of the
+   algorithm. First, the primary classifier cascades are searched for in the
+   image. In this case, the algorithm looks for facial features, then searches
+   for the nested cascade classifiers, which are the eyes. In all of these
+   pictures, only part of the face is displayed. As such, the primary cascade
+   classifiers are never found, and the algorithm can't center in on the face
+   and look for the nested cascades. As such, our algorithm succeeds, but the
+   haar detection fails.
+   
+<p>The second result, where both algorithms work, but ours yeild false
+   positives, may be demonstrated with:
+<br>
+   ./run_project aaron
+<br>
+   ./run_project tj
+<br>
+   The probable reason for this is that these circumstances are the opposite
+   of the 1st set of examples. These images include the entire face. There is
+   more for our algorithm to confuse as a pupil (as there are many more dark
+   pixels in the image). The haar detection, however, does not get confused by
+   these extra details, and finds the eyes (although, depending on the machine,
+   only one eye is found on TJ's picture).
+<br>
+   Please note: Because our algorithm is processing <b>many</b> false
+   positives, it takes a long time to run. When the program seems to be
+   stalling on these images, (and subsequent images with false positives) it 
+   is indeed working, just very slowly.
+
+<p>The third result, where both algorithms yeild false positives, may be
+   demonstrated with:
+<br>
+   ./run_project bobby
+<br>
+   ./run_project darkerFace
+<br>
+   The probable reason for this is very similar to that of the 2nd set of
+   examples, however the circumstances for the haar detection are different.
+   On images (where darkerFace.bmp is a <b>perfect</b> example) that have
+   been edited, or have very defined features, certain features of the face
+   (such as the nostrils) may be more defined than usual, and will be processed
+   by the algorithms as eyes. In this sense, false positives are registered.
+<br>
+   Please note: depending on the machine, bobby.bmp will either be processed
+   correctly by the haar detection algorithm, (and thus fall into the 2nd set
+   of examples) or yeild a third eye. It was yeilding false positives
+   throughout the entire testing process, however, and only worked correctly
+   when testing on other computers, so I have included it in the 3rd set of
+   examples.
+   
+<p>The fourth result, where neither algorithms work, may be demonstrated with:
+<br>
+   ./run_project darkerFace2
+<br>
+   ./run_project hikari
+<br>
+   The reason for this is that these images seem to be washed out by editing
+   software. As such, the haar detection algorithm seems unable to find
+   defining features. As such, the face and eyes may not be located. As well,
+   looking at the black images for these pictures (in "code/black/") explain
+   why our algorithm fails. When the black filter is run on them, nothing is
+   within the color range. The resulting image is completely blank. When the
+   looping runs over this image, nothing is processed, and no circles are
+   drawn. Nothing is detected.
+
+<p>Please note: the following example is unique among the results:
+<br>
+   ./run_project eyes2
+<br>
+   This seems to have the problem with haar detection described in the 1st set
+   of examples, but has the problem with our algorithm in the 3rd set of
+   examples.
+   
+<p>As such, it may be seen that both algorithms have merits and problems.
+   Depending on the cirumstances, some may work while others may not. This 
+   further drives home that feature detection is an unsolved problem that needs
+   more work and research.
+  
+
+<h2>Reflection</h2>
+
+<p><b>How good was your original planning?</b>
+<br>
+At the very beginning we did not have a very clear plan of what we were capable 
+of doing since at that moment we didn’t know much about Opencv, nor about 
+coding in C++. Hence we made rather ambitious initial plans, that included 
+finishing eye detection by Checkpoint 2, and creating an application that uses 
+eye detection by the Final Project deadline. However as we gauged the extent 
+and limits of our ability over the last couple of weeks, we were able to make 
+realistic goals. For example, implementing eye detection was much harder than 
+we foresaw, especially without the use of haar cascades, so we scaled back our 
+final spec. Other problems included the fact that 3/4 of our group had serious 
+commitments to extra-curricular performing groups during the same time that we 
+worked on the project, which made it hard to find time in which we were all 
+available to meet and to work on our project.
+
+<p><b>How did your milestones go?</b>
+<br>
+As a group we had trouble the first couple of weeks because various group 
+members had other pressing commitments - for example 3 out of the 4 group 
+members were involved with the Freshman Musical. That unfortunately meant 
+that we could not completely implement simple eye detection by the beta 
+checkpoint. However, we did gain much considerable background knowledge 
+during this time period, learning a lot about Harr feature detection, various 
+other forms of eye detection, and how to understand the various forms of eye 
+detection code that we found. That said, the last week the group really 
+buckled down and met every day. 
+
+<p><b>What was your experience with design, interfaces, languages, systems, 
+testing, etc.?</b>
+<br>
+Though all of us took CS50 last semester and remembered how to use C fairly 
+well, which helped us with C++, we had problems in understanding how to use 
+OpenCV. It is always difficult to learn how to use any open source library, 
+and OpenCV was no exception. We also had problems setting up our git 
+repository, which took a while to sort out. Additionally, we had trouble 
+figuring out how the function FloodFill stored the rects that it outputted, 
+and how to iterate through pixels using OpenCV. For about a week we thought 
+we had been iterating correctly through each image, and then we figured out 
+that the pointers we used that pointed to the pixel data in each image matrix 
+were used in the wrong way. Our program initially had problems with 
+segfaulting, though this seems to be fixed in the final implementation. 
+Finally, most of the experience we gained was in the use of C++ in conjunction 
+with OpenCV. Coding in C++ gave us access to Opencv which allowed us to do 
+everything that helped us manipulate images. Floodfill and Inrange, both OpenCV
+ functions, helped greatly with our final implementation. Though the syntax and
+  storage of variables in OpenCV was at times strange, the rest of its use was 
+  very straightforward. For example, the windows that the imshow function 
+  creates were perfect for testing our algorithms, something that was helped 
+  further by the compare function we created. 
+
+<p><b>What surprises, pleasant or otherwise, did you encounter on the way?</b>
+<br>
+	Installing OpenCV proved to be more challenging than was at first expected. 
+	For some reason installing the library turned to be much more complicated 
+	than it should have been. After that was done, eye detection was 
+	surprisingly hard to implement, and we had to try many different methods 
+	to create our own implementation without the help of haar cascades. First 
+	of all, we tried converting each testing image into a black and white 
+	image showing only the edges in each one using an OpenCV function that 
+	found edges. We then attempted to find the eyes of each person by calling 
+	FloodFill only at the points that had defined edges, however this found a 
+	lot of false positives and was not very accurate, and was definitely not 
+	the best way of detecting eyes. We then tried finding the edges of 
+	grayscale copies of each image instead, which made a slight difference. 
+	Finally, we decided to throw much of that work away and try a new method. 
+	In this method, which was used in the final implementation, we first found 
+	all of the pixels that were within a set range from white using the 
+	function inRange and saved these results in the “black” folder, and then 
+	ran FloodFill on these pixels, printing a circle around the resulting rec 
+	in the original image instead of the filtered image. This turned out to be 
+	much more accurate. Though it was not pleasant coming to our final 
+	algorithm for eye detection, once we finally got it to work well it was a 
+	huge relief.
+<br>
+    Unfortunately, when we were trying to set up OpenCV on our computers, Tony
+    was on a week long trip in California. This made it very hard to set up, 
+    and effectively put us a week in the whole.
+
+<p><b>What choices did you make that worked out well or badly?</b>
+<br>
+	Decisions that worked well included the decision to focus on eye detection 
+	first instead of trying face detection as doing face detection would have 
+	been an incredible challenge. We also chose to code in C++ instead of in C 
+	or in Python, which are both also supported by OpenCV, which was probably 
+	for the best, as C++ is easier to use with OpenCV than C and is closer in 
+	syntax to C, which we had all already used, than Python.  Our initial 
+	decision to use the defined edges of each image to detect eyes did not 
+	work out, and instead we changed our implementation to use color 
+	predominantly to find the eyes. So, some of the initial decisions that we
+	made were poor, but we were able to work everything out by the end. 
+
+<p><b>What would you like to do if there were more time?</b>
+<br>
+	Mostly we would like to refine the code so it works more reliably. Our eye 
+	detection currently doesn’t reliably work for all pictures. Our algorithm 
+	is most effective when the image is cropped fairly closely around one or 
+	more eyes. In the example of lighterFace.bmp, the image is cropped too 
+	closely for the Haar algorithm to detect a face, so it doesn't register 
+	any eyes, but our algorithm is spot on. Aaron.bmp has a clearly defined 
+	face, so the Haar algorithm has no trouble locating the eyes, but because 
+	it is not cropped to the eyes and contains a lot of other dark spots, our 
+	algorithm registers a lot of false positives. Of course, some images, such 
+	as bobby.bmp, register false positives with any algorithm. And other faces 
+	do not register eyes in either case. In the tests we ran on hikari.bmp, the 
+	image was too washed out, our black filter couldn’t find any proper dark 
+	spots, and the haar detection algorithm was not able to find any face or 
+	eyes for similar reasons. We would have liked to have found a way to get 
+	rid of false positives, though we knew that there would always be images 
+	that would trick our implementation. In the future, we could improve our 
+	algorithm by adding in a face-detection element like that used by the Haar 
+	algorithm. Because our algorithm works best on images cropped closely 
+	around the eyes, using face detection to limit our search to areas that 
+	ought to have eyes could greatly reduce our number of false positives. 
+	Additionally, we had wanted to make some sort of application using both 
+	face and eye detection when we first started this project, and that would 
+	have been fun to do if we had had more time. 
+	
+<p> <b>How would you do things differently next time?</b>
+<br>
+We would have tried to organize our time a bit better. We especially had 
+trouble the first couple of weeks because there was a play in which at 
+least of our group members were involved in every weekend. We also wouldn’t 
+have spend so much time on figuring out Harr feature detection, and would 
+have instead focused on our own implementation. Additionally, we would definitely
+ have started coding sooner, instead of what we did, which involved focusing on 
+ research for the first weeks of our work. 
+
+<p><b>What was each group member's contribution to the project?</b>
+<br>
+In the first couple weeks, everyone did research together. We had quasi-regular 
+meetings in Matthews basement where we would do this research. We all read up on
+Harr Cascades, color and image filters, and learned about the functions as well as 
+the expanding nature of opencv. As time went on, we started splitting up the 
+tasks. Bobby did a lot of the coding itself, which became more true in the last
+ week or so, but he was helped a lot by the others in the group in coming up with 
+ the ideas for our implementation and editing the code that he came up with. Hikari 
+ wrote a lot of the spec, helped a lot with research and helped with our code. 
+ Aaron, probably the busiest member of the group, wrote the script for the video, 
+and helped a lot on the ideas for the code.TJ made the video itself, recording his 
+own voiceover and editing images and other footage together with a couple 
+screencasts to make the video, while also helping in editing the code and the spec. 
+
+<p><b>What is the most important thing you learned from the project?</b>
+<br>	
+Other than becoming familiar with the syntax of C, as well as figuring out how 
+to use OpenCV, becoming acquainted with the extent and ubiquity of 
+face-detection and eye-detection technologies was truly fascinating, as well 
+as becoming acquainted with the algorithms with which they work. We are on the 
+cusp of truly effective face recognition, where one can, for example, give a 
+picture containing many faces to a program and the program will accurately 
+match every face with the name of the person each face belongs to. Eye 
+detection, face detection, and face recognition will soon become integral 
+parts of our lives, and can help with major improvements in surveillance, 
+gaming and other areas. The skills that we learned, including coding with 
+OpenCV and C++, are very helpful for going forward in computer science, as 
+OpenCV is almost necessary to know for computer graphics, and C++ is pretty 
+much omnipresent as far as computer languages are concerned. 
+
+
+<h2>Advice for future students</h2>
+
+<p>If we could talk to future students, we would tell them that they need to 
+manage their time better than we did, and that they need to choose their 
+groups wisely as we had 3 members who were very busy. They should also try to 
+maintain good communication with their TF’s, unlike what we did. We also 
+suggest that the students should try to code as soon as possible, rather 
+than focus on research. 
+
+
+<p>...and they lived happily ever after.
+
+</body>
+</html>
+

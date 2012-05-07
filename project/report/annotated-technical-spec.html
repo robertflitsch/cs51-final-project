@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Eye Detection Using OpenCV : Annotated Technical Spec</title>
+</head>
+
+<body>
+<h1>Annotated Technical Spec</h1>
+
+<h3>Bobby Flitsch, Aaron Graham-Horowitz, TJ Barber, Hikari Senju</h3>
+
+<h3>Please note: The following is our Annotated Technical Spec, not the 
+    Original Technical Spec. Annotated comments are colored in red.</h3>
+    
+<a href="../report.html">Back to the main report page</a>
+
+<h2>Overview</h2>
+
+<p>Our project will explore algorithms within OpenCV's library that deal with 
+   face detection, among other algorithm types. Our project will analyze an 
+   implementation of face detection using Opencv library functions. We will 
+   recreate face detection algorithms in order to implement face detection 
+   ourselves. We will evaluate our code's functionality by comparing an image 
+   run through our face detection algorithm with an image that we have made, 
+   with a "correct" detection of the face (comparing as png's and marking 
+   pixel differences).
+
+<p><font color = "FF0000">Specifically from facial feature detection, our
+   project focused on eye detection. As well, we used bmp's rather than png's
+   for comparison purposes in our final project.</font>
+
+<h2>Feature List</h2>
+
+<p>We will be making algorithms that take an image and spit out an image with 
+   the "detected" features highlighted. In exploring the different features of a 
+   face that you will want to detect, we will define different algorithms for 
+   each of these features. The following features we will be looking for are:
+<br>
+   1) Eyes: At a base line, we want to be able to get eye detection working 
+   (with 	detection of other features to follow as extensions)
+<br>
+   - eyes are a good feature to search for because they are an important defining 
+   feature of the face. Because of the gradient from light to dark within the eye, 
+   it will also have a unique haar features that could be detected. Presumably 
+   this will be center-surround features (for the pupil and iris, surrounded by 
+   the white) with nearby edge features (for the eyelid).
+   
+<p><font color = "FF0000">We did achieve this base line of eye detection.
+   Once we got eye detection "working" for the beta deadline, we decided it
+   would be a better final result to focus our efforts for the remaining time
+   improving our eye detection algorithm then "spread out" our efforts and
+   implement nose and mouth detection as well, but do a shoddy job of each.
+   </font>
+   
+<p>2) Nose: After finding eyes, we will look to find other dominant facial 
+   features
+<br>
+   - like the eyes, the nose is a dominant facial feature. It will also have 
+   unique haar features, including center-surround features (the nostrils) nearby 
+   line features (where the skin color is cut by the bottom of the nose)
+<br>
+   3) Mouth:
+<br> 
+   - another dominant facial feature, it will be marked by having multiple haar 
+   features in close proximity. These would probably include multiple similarly 
+   horizontally oriented prominent line features.
+
+<h2>Core Features</h2>
+
+<p>a program that does the following things:
+<br>
+   1) takes in an image and that image already defined for where the eyes 
+   "should" be detected.
+<br>
+   2) runs eye detection on the 1st image, and creates an image like the 2nd one, 
+   but with the eyes detected
+<br>
+   3) compares the 2nd image with the detected image (using bit comparison on the 
+   png files) and spits back useful comparison data to the user as data.
+   
+<p><font color = "FF0000">In our final product this single "program" ended up
+   being split up into 3 separate programs (in order to introduce more
+   separation of code and algorithmic functionality. In order to facilitate
+   the ease of a single command line call, we also implemented a bash script,
+   "run_project.sh" to run all 3 programs on an image with one call.</font>
+
+<h2>Cool Extensions</h2>
+
+<p>implement the above program, but with other features detected (nose and 
+   mouth)
+<br>
+   - implement a "total" face detection using the eye, nose, and mouth methods, 
+   comparing the relative proximity of each to detect a whole face.
+<br>
+   - if we can detect the whole face, we can make sure that all of our 
+   features match up, thereby improving accuracy
+<br>
+   *PLEASE NOTE* Because a different viewing angle of the face results in 
+   different proximities of haar features we will implement these algorithms 
+   looking at the face from the front exclusively.
+
+<p><font color = "FF0000">As described above, we decided to focus our efforts
+   for the final week of the project in refining our implementation of eye
+   detection, rather than moving on the nose and mouth detection, so that our
+   eye detection algorithm would be more comprehensive. As a result, we
+   unfortunately did not get to attack the cool extensions, but we did have a
+   better final algorithm for eye detection than we would have if we divided
+   our efforts among the different features.</font>
+
+
+<h2>Technical Specification</h2>
+
+<p>The abstraction level we are looking for is to have different objects 
+   representing the different haar features we are looking for within a face. 
+   For example, we could have an object that has methods to define the wavelet 
+   features of an eye, an object for that of a nose, etc.
+<br>
+   - We also plan on modularizing our functions in order to call them from the 
+   command line in our concise programs that run our algorithms. For example, an 
+   object that has methods to define our eye detection algorithm, nose detection, 
+   image compare, etc. This will hide the functions within our implementation, 
+   but allow the implementation as a whole to be called.
+   
+<p><font color = "FF0000">Since we did not get to implement the cool features
+   and move on to detection of other features, there was no need to abstract 
+   our code among the different facial features. We did however, provide for
+   separation of code and algorithmic functionality by separating the haar
+   feature detection, our implementation of eye detection, and the comparison
+   algorithm into separate files.</font>
+
+<h2>Timeline</h2>
+
+<p><font color = "FF0000">Once we worked between the 1st checkpoint and the
+   beta checkpoint, our timeline changed drastically. As such, the following
+   timeline is obsolete and inacurate. The timeline included within the
+   planning section of report.html, however, is acurate. Please follow that for
+   a timeline of our project.</font>
+
+<p>- Mon 4/9 - Can't all meet: read attached documentation on our own, to bring 
+   knowledge into next meeting
+<br>
+   - Tue 4/10 - Everyone meet up to implement eye detection
+<br>
+   - Wed 4/11 - Meet up to implement interface and comparison (as well as runoff 
+   from yesterday)
+<br>
+   - 4/12 - 4/15 - Split up roles in making program functional and maintaining 
+   abstraction
+<br>
+   * EYE DETECTION SHOULD HOPEFULLY BE DONE BY 15 *
+<br>
+   - week following, implement as many cool features as possible
+   
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Eye Detection Using OpenCV : Original Technical Spec</title>
+</head>
+
+<body>
+<h1>Original Technical Spec</h1>
+
+<h3>Bobby Flitsch, Aaron Graham-Horowitz, TJ Barber, Hikari Senju</h3>
+
+<h3>Please note: The original technical spec is found below, and a annotated
+    technical spec may be found as a link on the main report.html page.</h3>
+    
+<a href="../report.html">Back to the main report page</a>
+
+<h2>Overview</h2>
+
+<p>Our project will explore algorithms within OpenCV's library that deal with 
+   face detection, among other algorithm types. Our project will analyze an 
+   implementation of face detection using Opencv library functions. We will 
+   recreate face detection algorithms in order to implement face detection 
+   ourselves. We will evaluate our code's functionality by comparing an image 
+   run through our face detection algorithm with an image that we have made, 
+   with a "correct" detection of the face (comparing as png's and marking 
+   pixel differences).
+
+<h2>Feature List</h2>
+
+<p>We will be making algorithms that take an image and spit out an image with 
+   the "detected" features highlighted. In exploring the different features of a 
+   face that you will want to detect, we will define different algorithms for 
+   each of these features. The following features we will be looking for are:
+<br>
+   1) Eyes: At a base line, we want to be able to get eye detection working 
+   (with 	detection of other features to follow as extensions)
+<br>
+   - eyes are a good feature to search for because they are an important defining 
+   feature of the face. Because of the gradient from light to dark within the eye, 
+   it will also have a unique haar features that could be detected. Presumably 
+   this will be center-surround features (for the pupil and iris, surrounded by 
+   the white) with nearby edge features (for the eyelid).
+<br>
+   2) Nose: After finding eyes, we will look to find other dominant facial 
+   features
+<br>
+   - like the eyes, the nose is a dominant facial feature. It will also have 
+   unique haar features, including center-surround features (the nostrils) nearby 
+   line features (where the skin color is cut by the bottom of the nose)
+<br>
+   3) Mouth:
+<br> 
+   - another dominant facial feature, it will be marked by having multiple haar 
+   features in close proximity. These would probably include multiple similarly 
+   horizontally oriented prominent line features.
+
+<h2>Core Features</h2>
+
+<p>a program that does the following things:
+<br>
+   1) takes in an image and that image already defined for where the eyes 
+   "should" be detected.
+<br>
+   2) runs eye detection on the 1st image, and creates an image like the 2nd one, 
+   but with the eyes detected
+<br>
+   3) compares the 2nd image with the detected image (using bit comparison on the 
+   png files) and spits back useful comparison data to the user as data.
+
+<h2>Cool Extensions</h2>
+
+<p>implement the above program, but with other features detected (nose and 
+   mouth)
+<br>
+   - implement a "total" face detection using the eye, nose, and mouth methods, 
+   comparing the relative proximity of each to detect a whole face.
+<br>
+   - if we can detect the whole face, we can make sure that all of our 
+   features match up, thereby improving accuracy
+<br>
+   *PLEASE NOTE* Because a different viewing angle of the face results in 
+   different proximities of haar features we will implement these algorithms 
+   looking at the face from the front exclusively.
+
+
+<h2>Technical Specification</h2>
+
+<p>The abstraction level we are looking for is to have different objects 
+   representing the different haar features we are looking for within a face. 
+   For example, we could have an object that has methods to define the wavelet 
+   features of an eye, an object for that of a nose, etc.
+<br>
+   - We also plan on modularizing our functions in order to call them from the 
+   command line in our concise programs that run our algorithms. For example, an 
+   object that has methods to define our eye detection algorithm, nose detection, 
+   image compare, etc. This will hide the functions within our implementation, 
+   but allow the implementation as a whole to be called.
+
+<h2>Timeline</h2>
+
+<p>- Mon 4/9 - Can't all meet: read attached documentation on our own, to bring 
+   knowledge into next meeting
+<br>
+   - Tue 4/10 - Everyone meet up to implement eye detection
+<br>
+   - Wed 4/11 - Meet up to implement interface and comparison (as well as runoff 
+   from yesterday)
+<br>
+   - 4/12 - 4/15 - Split up roles in making program functional and maintaining 
+   abstraction
+<br>
+   * EYE DETECTION SHOULD HOPEFULLY BE DONE BY 15 *
+<br>
+   - week following, implement as many cool features as possible
+   
+</body>
+</html>

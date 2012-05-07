@@ -1,0 +1,118 @@
+Because of the I/O functionality of the project, a few specific requirements
+in the source tree for our project must be maintained. If folders are set up
+incorrectly, don't exist, or are in the wrong place, the programs will
+not run correctly. The files should be correct in the .zip file, but just
+in case, the correct source tree set up is found below:
+
+SOURCE TREE
+
+Within the main directory: code/
+	black/
+	cascades/
+    Developmental_Code/
+	eye_result/
+	haar_result/
+	images/
+	build_all.sh
+	run_project.sh
+	Makefile
+	compare.cpp
+	eyedetect.cpp
+	haardetect.cpp
+
+Within the directory: cascades/
+	haarcascade_eye.xml
+	haarcascade_frontalface_alt.xml
+
+Within the directory: images/
+	aaron.bmp
+	bobby.bmp
+	darkerFace.bmp
+	darkerFace2.bmp
+	eye.bmp
+	eye2.bmp
+	eyes.bmp
+	eyes2.bmp
+	hikari.bmp
+	lighterFace.bmp
+	tj.bmp
+
+Within the directory: Developmental_Code/
+	black/
+	images/
+	build_all.sh
+	eyedetect_beta.cpp
+	ffill.cpp
+	looping.cpp
+
+
+Within the directory: Developmental_Code/images/
+	black.bmp
+	eye.bmp
+
+Please Note!!!!: The following directories should start empty, but they must 
+exist so that the program can write to them (and subsequently read from them)
+
+	black/
+	eye_result/
+	haar_result/
+	Developmental_Code/black/
+
+COMPILING
+In order to compile all of the files necessary for the project, go into the 
+main directory: 
+“code/”, and run “./build_all.sh”. This will run the bash script that compiles
+all .cpp files (which all of our files are).  This will compile “compare.cpp”,
+“eyedetect.cpp”, and “haardetect.cpp”. You should also go into the 
+Developmental_Code directory (so you should be in the following:
+“code/Developmental_Code/”) and run, again, “./build_all.sh”. This will compile
+“eyedetect_beta.cpp”, “ffill.cpp”, and “looping.cpp”.
+
+Please note: The programs within the “Developmental_Code/” directory are not 
+the final project code. They have been included for reference in the decision 
+process behind the code that went into the final project. The final project 
+programs are “compare”, “eyedetect”, and “haardetect”.
+
+Also please note: The "Developmental_Code/" directory is also found in the
+"report/" directory for use in the design part of the report. The compiling
+instructions are the same for both "Developmental_Code/" directories, as they
+are identical.
+
+RUNNING PROGRAMS
+Once the code has been compiled, go to the main directory 
+(“code/”) and run the “run_project.sh” bash script on an image to run the eye 
+detection on it.
+
+Because all of the images are bitmaps, (we chose to use bitmaps because they
+are easier to iterate through for the comparison function) and all the images
+are contained within the same directory (“images/”) there was no need to 
+require the path or file extension to be typed at the command line. Therefore,
+for your convenience, we have made the command line calls to “./run_program.sh”
+formatted to be the following.
+
+If a picture has the following path: “images/file.bmp” the call to “run_project.sh” should be
+“./run_project.sh file”
+
+Correct Examples
+./run_project.sh eye
+./run_project.sh eyes2
+./run_project.sh bobby
+
+Incorrect Examples
+./run_project images/eye.bmp
+./run_project eyes2.bmp
+./run_project images/bobby
+
+The following are all the possible calls to run_project.sh (each of the images to run it)
+	./run_project aaron
+	./run_project bobby
+	./run_project darkerFace
+	./run_project darkerFace2
+	./run_project eye
+	./run_project eye2
+	./run_project eyes
+	./run_project eyes2
+	./run_project hikari
+	./run_project lighterFace
+	./run_project tj
+

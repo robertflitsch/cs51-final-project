@@ -1,0 +1,68 @@
+Determining if the include file libavformat/avformat.h exists failed with the following output:
+Change Dir: /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
+gmake[1]: Entering directory `/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o
+/usr/bin/gcc   -ggdb -std=c99 -Wall -Werror      -o CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o   -c /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:34: fatal error: libavformat/avformat.h: No such file or directory
+compilation terminated.
+gmake[1]: Leaving directory `/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp'
+gmake[1]: *** [CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o] Error 1
+gmake: *** [cmTryCompileExec/fast] Error 2
+
+
+Determining if the include file ffmpeg/avformat.h exists failed with the following output:
+Change Dir: /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
+gmake[1]: Entering directory `/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o
+/usr/bin/gcc   -ggdb -std=c99 -Wall -Werror      -o CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o   -c /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:29: fatal error: ffmpeg/avformat.h: No such file or directory
+compilation terminated.
+gmake[1]: Leaving directory `/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp'
+gmake[1]: *** [CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o] Error 1
+gmake: *** [cmTryCompileExec/fast] Error 2
+
+
+Determining if the function alloca exists failed with the following output:
+Change Dir: /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
+gmake[1]: Entering directory `/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -ggdb -std=c99 -Wall -Werror   -DCHECK_FUNCTION_EXISTS=alloca   -o CMakeFiles/cmTryCompileExec.dir/CheckFunctionExists.c.o   -c /usr/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec.dir/link.txt --verbose=1
+/usr/bin/gcc   -ggdb -std=c99 -Wall -Werror   -DCHECK_FUNCTION_EXISTS=alloca    CMakeFiles/cmTryCompileExec.dir/CheckFunctionExists.c.o  -o cmTryCompileExec -rdynamic 
+CMakeFiles/cmTryCompileExec.dir/CheckFunctionExists.c.o: In function `main':
+/usr/share/cmake/Modules/CheckFunctionExists.c:11: undefined reference to `alloca'
+collect2: ld returned 1 exit status
+gmake[1]: Leaving directory `/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp'
+gmake[1]: *** [cmTryCompileExec] Error 1
+gmake: *** [cmTryCompileExec/fast] Error 2
+
+
+Determining if the include file linux/videodev.h exists failed with the following output:
+Change Dir: /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
+gmake[1]: Entering directory `/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o
+/usr/bin/gcc   -ggdb -std=c99 -Wall -Werror      -o CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o   -c /home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:28: fatal error: linux/videodev.h: No such file or directory
+compilation terminated.
+gmake[1]: Leaving directory `/home/jharvard/Downloads/OpenCV-2.3.1/release/CMakeFiles/CMakeTmp'
+gmake[1]: *** [CMakeFiles/cmTryCompileExec.dir/CheckIncludeFile.c.o] Error 1
+gmake: *** [cmTryCompileExec/fast] Error 2
+
+

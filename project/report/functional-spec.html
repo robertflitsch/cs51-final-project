@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Eye Detection Using OpenCV</title>
+</head>
+
+<body>
+<h1>Eye Detection Using OpenCV</h1>
+
+<h3>Bobby Flitsch, Aaron Graham-Horowitz, TJ Barber, Hikari Senju</h3>
+
+<p><b>Functional Spec:</b>
+<br>
+-black: Folder where we store the outputs of inRange so that we can access them later with FloodFill
+ <br>
+-build_all.sh : Bash script that compiles all the cpp files in the directory
+ <br>
+-cascades : Folder that stores the outputs of the haar cascades implementation
+ <br>
+compare: Code that compares two images and finds the percentage of pixels that are different
+ <br>
+Developmental_Code: Folder that stores pieces of code that were stepping stones to the final implementation. These were also used in the video to show each step in the image. Within it is looping.cpp, which is the code for the initial step of the final implementation using inRange, ffill.cpp, which performs a floodfill on an image, and eyedetect_beta.cpp, a previous version of our eye detect function. It also contains an identical build_all.sh, as well as a folder for images and a folder for the haar cascades from OpenCV.
+ <br>
+eye_result: Folder that contains the images that result from our own implementation
+ <br>
+eyedetect.cpp: Code for our own implantation of eye detection.
+ <br>
+haar_result: Folder containing the images that result from haar feature detection.
+ <br>
+haardetect.cpp: Code for the implantation of Haar feature detection for eyes.
+ <br>
+Images: Folder that stores the original images that we found to test our implementation with
+ <br>
+Makefile: a make file, not really necessary because of build_all.sh
+ <br>
+run_project.sh: Bash script that runs the entire project, calling compare on the results from both eyedetect.cpp and haardetect.cpp
+
+</body>
+</html>
